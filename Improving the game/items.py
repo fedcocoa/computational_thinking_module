@@ -10,6 +10,16 @@ You wonder why they have printed a suicide hotline number on it?...""",
     "mass": 0.05
 }
 
+item_key = {
+    "id": "key",
+
+    "name": "small shiny key",
+
+    "description": """A small shiny key with a seemingly unusual keying.""",
+
+    "mass": 0.05
+}
+
 item_laptop = {
     "id": "laptop",
 

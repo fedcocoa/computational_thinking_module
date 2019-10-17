@@ -69,7 +69,7 @@ def print_inventory_items(items):
     csv = list_of_items(items)
     if csv != '':
         print("You have {}.\n".format(csv[0:len(csv)]))
-        print("You're carrying {}Kg, you can carry {}Kg more.".format(player_mass,round(mass_limit-player_mass,2)))
+        print("You're carrying {}Kg, you can carry {}Kg more.".format(round(player_mass,2),round(mass_limit-player_mass,2)))
     else:
         print("You have nothing.\n")
 
@@ -233,7 +233,6 @@ def execute_go(direction):
     else:
         print("You cannot go there.")
 
-
 def execute_take(item_id):
     """This function takes an item_id as an argument and moves this item from the
     list of items in the current room to the player's inventory. However, if
@@ -276,7 +275,6 @@ def execute_drop(item_id):
     else:
         print('You cannot drop that.')
     
-
 def execute_command(command):
     """This function takes a command (a list of words as returned by
     normalise_input) and, depending on the type of action (the first word of
@@ -309,7 +307,6 @@ def execute_command(command):
     else:
         print("This makes no sense.")
 
-
 def menu(exits, room_items, inv_items):
     """This function, given a dictionary of possible exits from a room, and a list
     of items found in the room and carried by the player, prints the menu of
@@ -330,7 +327,6 @@ def menu(exits, room_items, inv_items):
 
     return normalised_user_input
 
-
 def move(exits, direction):
     """This function returns the room into which the player will move if, from a
     dictionary "exits" of avaiable exits, they choose to move towards the exit
@@ -347,12 +343,18 @@ def move(exits, direction):
     # Next room to go to
     return rooms[exits[direction]]
 
+def print_win():
+    print("""You use the key to open the small box and find a small piece 
+of paper that reads 'password: password'. You are massively dissapointed
+in your personal tutor's security measures and replace the note with a
+link to LastPass.""")
 
 # This is the entry point of our program
 def main():
 
     # Main game loop
-    while True:
+    won = False
+    while not won:
         # Display game status (room description, inventory etc.)
         print_room(current_room)
         print_inventory_items(inventory)
@@ -362,8 +364,10 @@ def main():
 
         # Execute the player's command
         execute_command(command)
+        if item_key in rooms["Tutor"]["items"]:
+            won = True
 
-
+    print_win()
 
 # Are we being run as a script? If so, run main().
 # '__main__' is the name of the scope in which top-level code executes.

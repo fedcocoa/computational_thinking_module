@@ -1,5 +1,19 @@
 from items import *
 
+store_cupboard = {
+    "name": "Store cupboard",
+
+    "description":
+"""You've entered a very small cold cupboard with various 
+computer components and broken displays. There is barely any
+room to move around. You can only leave east back to MJ and 
+Simon's room.""",
+
+    "exits": {"east": "Admins"},
+
+    "items": [item_key]
+}
+
 room_reception = {
     "name": "Reception",
 
@@ -22,9 +36,10 @@ room_admins = {
     "description":
     """You are leaning agains the door of the systems managers'
 room. Inside you notice Matt "MJ" John and Simon Jones. They
-ignore you. To the north is the reception.""",
+ignore you. To the north is the reception and to the west is
+the store cupboard.""",
 
-    "exits":  {"north": "Reception"},
+    "exits":  {"north": "Reception", "west": "Store cupboard"},
 
     "items": []
 }
@@ -36,7 +51,9 @@ room_tutor = {
     """You are in your personal tutor's office. He intently
 stares at his huge monitor, ignoring you completely.
 On the desk you notice a cup of coffee and an empty
-pack of biscuits. The reception is to the west.""",
+pack of biscuits. The reception is to the west. In the 
+corner under the desk you spot a small golden box. The 
+keyway is very small and unusually shaped.""",
 
     "exits": {"west": "Reception"},
 
@@ -77,5 +94,6 @@ rooms = {
     "Admins": room_admins,
     "Tutor": room_tutor,
     "Parking": room_parking,
-    "Office": room_office
+    "Office": room_office,
+    "Store cupboard": store_cupboard
 }
