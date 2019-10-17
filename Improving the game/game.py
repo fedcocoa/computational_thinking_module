@@ -69,6 +69,7 @@ def print_inventory_items(items):
     csv = list_of_items(items)
     if csv != '':
         print("You have {}.\n".format(csv[0:len(csv)]))
+        print("You're carrying {}Kg, you can carry {}Kg more.".format(player_mass,round(mass_limit-player_mass,2)))
     else:
         print("You have nothing.\n")
 
@@ -224,9 +225,10 @@ def execute_go(direction):
     (and prints the name of the room into which the player is
     moving). Otherwise, it prints "You cannot go there."
     """
+    global current_room
     if is_valid_exit(current_room['exits'],direction):
         new_room = move(current_room['exits'],direction)
-        print('Moving {} to {}.'.format(direction,new_room))
+        print('Moving {} to {}.'.format(direction,new_room['name']))
         current_room = new_room
     else:
         print("You cannot go there.")
@@ -238,13 +240,18 @@ def execute_take(item_id):
     there is no such item in the room, this function prints
     "You cannot take that."
     """
+    global player_mass
     valid = False
     for item_in_room in current_room['items']:
         if item_in_room['id'] == item_id:
-            inventory.append(item_in_room)
-            current_room['items'].remove(item_in_room)
-            valid = True
-            break
+            if player_mass + item_in_room['mass'] <= mass_limit:
+                inventory.append(item_in_room)
+                current_room['items'].remove(item_in_room)
+                player_mass = calculate_mass()
+                valid = True
+                break
+            else:
+                print('You cannot carry that much.')
     if valid:
         print('Taken {}.'.format(item_id))
     else:
@@ -255,11 +262,13 @@ def execute_drop(item_id):
     player's inventory to list of items in the current room. However, if there is
     no such item in the inventory, this function prints "You cannot drop that."
     """
+    global player_mass
     valid = False
     for item_in_inventory in inventory:
         if item_in_inventory['id'] == item_id:
             inventory.remove(item_in_inventory)
             current_room['items'].append(item_in_inventory)
+            player_mass = calculate_mass()
             valid = True
             break
     if valid:
