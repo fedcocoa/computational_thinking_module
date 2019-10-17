@@ -5,7 +5,6 @@ from player import *
 from items import *
 from gameparser import *
 
-
 def list_of_items(items):
     """This function takes a list of items (see items.py for the definition) and
     returns a comma-separated list of item names (as a string). For example:
@@ -229,6 +228,8 @@ def execute_go(direction):
         new_room = move(current_room['exits'],direction)
         print('Moving {} to {}.'.format(direction,new_room))
         current_room = new_room
+    else:
+        print("You cannot go there.")
 
 
 def execute_take(item_id):
@@ -237,18 +238,34 @@ def execute_take(item_id):
     there is no such item in the room, this function prints
     "You cannot take that."
     """
-    if item_id in current_room['items']:
-        
+    valid = False
+    for item_in_room in current_room['items']:
+        if item_in_room['id'] == item_id:
+            inventory.append(item_in_room)
+            current_room['items'].remove(item_in_room)
+            valid = True
+            break
+    if valid:
+        print('Taken {}.'.format(item_id))
     else:
         print('You cannot take that.')
-    
 
 def execute_drop(item_id):
     """This function takes an item_id as an argument and moves this item from the
     player's inventory to list of items in the current room. However, if there is
     no such item in the inventory, this function prints "You cannot drop that."
     """
-    pass
+    valid = False
+    for item_in_inventory in inventory:
+        if item_in_inventory['id'] == item_id:
+            inventory.remove(item_in_inventory)
+            current_room['items'].append(item_in_inventory)
+            valid = True
+            break
+    if valid:
+        print('Dropping {}.'.format(item_id))
+    else:
+        print('You cannot drop that.')
     
 
 def execute_command(command):
