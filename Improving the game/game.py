@@ -69,7 +69,6 @@ def print_inventory_items(items):
     csv = list_of_items(items)
     if csv != '':
         print("You have {}.\n".format(csv[0:len(csv)]))
-        print("You're carrying {}Kg, you can carry {}Kg more.".format(round(player_mass,2),round(mass_limit-player_mass,2)))
     else:
         print("You have nothing.\n")
 
@@ -318,6 +317,7 @@ def menu(exits, room_items, inv_items):
 
     # Display menu
     print_menu(exits, room_items, inv_items)
+    print("You're carrying {}Kg, you can carry {}Kg more.".format(round(player_mass,2),round(mass_limit-player_mass,2)))
 
     # Read player's input
     user_input = input("> ")

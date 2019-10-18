@@ -12,8 +12,6 @@ south and east. The exit is to the west.""",
     "exits": {"south": "Admins","east":"Tutor","west":"Parking"}
 }
 
-rooms[exits['south']]
-
 room_admins = {
     "name": "MJ and Simon's room",
 
