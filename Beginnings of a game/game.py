@@ -72,10 +72,6 @@ def normalise_input(user_input):
     'help'
     """
     return remove_spaces(remove_punct(user_input)).lower()
-    user_input = remove_punct(user_input)
-    user_input = remove_spaces(user_input)
-    user_input = user_input.lower()
-    return user_input
 
 def display_room(room):
     """This function takes a room as an input and nicely displays its name
